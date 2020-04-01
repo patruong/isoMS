@@ -1,0 +1,11 @@
+File,Sample,Loading,Start,End,gC,gN,gH,gO,Description,Aim,Date,Experimenter,Method,No.Sample,Replicates,Other,Samples,Controls,No.Controls,LC.Gradient,Duration,Instrument,MS1,MS2,OutputName
+20200306_AminoAcid_Pro_1_fit.csv,P,1000,0,50,,,,,Determination of isotopic ratio of CNHO on Hydroxproline in MS and MSMS (without fragmentation),To check the sensitivity of MS and MSMS events,3/25/2020,Hassan Gharibi,FT IsoR MS,3,3,"20 micro scans for HCD and MS, Resolution 120K for both events",Hydroxyproline,-,-,Direct Injection,50,Fusion,"Scan Range 50-200, 20 microscans","Scan Range 50-250, 20 microscans",MSMS_result
+20200306_AminoAcid_Pro_2_fit.csv,P,1000,0,50,,,,,,,,,,,,,,,,,,,,,
+20200306_AminoAcid_Pro_3_fit.csv,P,1000,0,50,,,,,,,,,,,,,,,,,,,,,
+20200309_AminoAcid_Hyp_0.01_1_fit.csv,Hyp,1000,0,50,,,,,,,,,,,,,,,,,,,,,
+20200309_AminoAcid_Hyp_0.01_2_fit.csv,Hyp,1000,0,50,,,,,,,,,,,,,,,,,,,,,
+20200309_AminoAcid_Hyp_0.01_AGC_1_fit.csv,Hyp,1000,0,50,,,,,,,,,,,,,,,,,,,,,
+20200309_AminoAcid_Hyp_0.01_AGC_2_fit.csv,Hyp,1000,0,50,,,,,,,,,,,,,,,,,,,,,
+20200309_AminoAcid_Hyp_0.1_AGC_1_20200310114744_fit.csv,Hyp,1000,0,50,,,,,,,,,,,,,,,,,,,,,
+20200309_AminoAcid_Hyp_0.1_AGC_2_fit.csv,Hyp,1000,0,50,,,,,,,,,,,,,,,,,,,,,
+20200309_AminoAcid_Hyp_0.1_AGC_3_fit.csv,Hyp,1000,0,50,,,,,,,,,,,,,,,,,,,,,
