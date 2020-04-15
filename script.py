@@ -10,10 +10,15 @@ ToDo:
 """
 
 import pandas as pd
+import seaborn as sns
+import matplotlib.pyplot as plt
 
-folder =  "MS"
 filename = "20200306_AminoAcid_Pro_1_fit.csv"
-df = pd.read_csv(folder + "/" + filename )    
+MS_folder =  "MS"
+MS = pd.read_csv(MS_folder + "/" + filename )    
+MSMS_folder = "MSMS"
+MSMS = pd.read_csv(MSMS_folder + "/" + filename )    
+
 
 
 def get_peak_values(df, seqNum, ion):
@@ -25,13 +30,13 @@ def get_peak_values(df, seqNum, ion):
     seq = df[df["seqNum"] == seqNum]
     
     # Select ion (based on file)
-    ion = seq[seq["ion"] == ion]
+    ion_vals = seq[seq["ion"] == ion]
     
     # Select isotopes
     dict_peak = {}
-    for i in ion.peak.unique():
+    for i in ion_vals.peak.unique():
         isotope = ion[ion["peak"] == i]
-        isotopic_peak =  isotope.mu.values[0]
+        isotopic_peak =  isotope.I.values[0]
         dict_peak.update({isotope.peak.values[0] : isotopic_peak})
     return dict_peak
 
@@ -45,88 +50,41 @@ def get_peak_ratios(df, seqNum, ion):
     seq = df[df["seqNum"] == seqNum]
     
     # Select ion (based on file)
-    ion = seq[seq["ion"] == ion]
+    ion_vals = seq[seq["ion"] == ion]
     
-    # Select isotopes
-    dict_peak = {}
-    for i in ion.peak.unique():
-        isotope = ion[ion["peak"] == i]
-        isotopic_peak =  isotope.mu.values[0]
-        dict_peak.update({isotope.peak.values[0] : isotopic_peak})
-    return dict_peak
+    # Select isotope ratioes
+    dict_ratios = {}
+    for i in ion_vals.peak.unique():
+        isotope = ion_vals[ion_vals["peak"] == i]
+        if not isotope.empty:
+            dict_ratios.update({isotope.peak.values[0] : isotope.isoratio.values[0]})
 
-"""   
-def get_peak_ratios(df, seqNum, ion):
+    return dict_ratios
+
+
+def get_all_peak_ratios(df, ion):
     df = df
-    seqNum = seqNum
     ion = ion
+    dict_peak_ratios = {}
+    for seqNum in df.seqNum.unique():
+        peak_ratio = get_peak_ratios(df, seqNum, ion)
+        dict_peak_ratios.update({seqNum : peak_ratio})
+    return dict_peak_ratios
 
-    # Select sequence run
-    seq = df[df["seqNum"] == seqNum]
-    
-    # Select ion (based on file)
-    ion = seq[seq["ion"] == ion]
-    
-    # Select isotopes
-    monoisotopic = ion[ion["peak"] == "0"]
-    C = ion[ion["peak"] == "13C"]
-    N = ion[ion["peak"] == "15N"]
-    H = ion[ion["peak"] == "2H"]
-    O = ion[ion["peak"] == "18O"]
-    
-    # Select mass of peaks
-    
-    monoisotopic_peak = monoisotopic.mu.values[0]
-    monoisotopic_peak_ratio = monoisotopic_peak/monoisotopic_peak
-    C_peak_ratio = C.mu .values[0]/monoisotopic_peak
-    N_peak_ratio = N.mu.values[0]/monoisotopic_peak
-    H_peak_ratio = H.mu.values[0]/monoisotopic_peak
-    O_peak_ratio = O.mu.values[0]/monoisotopic_peak
-    
-    peak_dict_ratio = {
-        "monoisotopic":monoisotopic_peak_ratio,
-        "13C":C_peak_ratio,
-        "15N":N_peak_ratio,
-        "2H":H_peak_ratio,
-        "18O":O_peak_ratio,
-        }
-    
-    return peak_dict_ratio
-"""
+ratios_ms = get_all_peak_ratios(MS, "P")
+df_ms = pd.DataFrame.from_dict(ratios_ms).T
+ratios_msms = get_all_peak_ratios(MSMS, "P")
+df_msms = pd.DataFrame.from_dict(ratios_msms).T    
 
-seq = df[df.seqNum == 5]
-ion = seq[seq.ion == "P"]
+ms = df_ms["13C"]
+msms = df_msms["13C"]
+plot_data = pd.DataFrame({'ms':ms.values, 'msms':msms.values})
+ax = sns.scatterplot(x="ms", y="msms", data=plot_data)
 
 
-monoisotopic = ion[ion["peak"] == "0"]
-C = ion[ion["peak"] == "13C"]
-N = ion[ion["peak"] == "15N"]
-H = ion[ion["peak"] == "2H"]
-O = ion[ion["peak"] == "18O"]
-
-if monoisotopic.empty = 
-monoisotopic_peak = monoisotopic.mu.values[0]
-C_peak = C.mu .values[0]
-N_peak = N.mu.values[0]
-H_peak = H.mu.values[0]
-O_peak = O.mu.values[0]
-
-
-for seqNum in df.seqNum.unique():
-    peak_ratios = get_peak_values(df, seqNum, "P")
-    
-peaks = get_peak_values(df, 1, "P")
-peak_ratios = get_peak_ratios(df, 1, "P")
-
-#apply(get_peak_ratios(1, "P", "MS","20200306_AminoAcid_Pro_1_fit.csv"))
-
-
-
-
-
-
-
-
-
+import seaborn as sns
+import matplotlib.pyplot as plt
+tips = sns.load_dataset("tips")
+ax = sns.scatterplot(x="total_bill", y="tip", data=tips)
 
 
