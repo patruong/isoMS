@@ -3,7 +3,7 @@
 """
 Created on Wed Apr 22 11:08:27 2020
 
-@author: esynergetics
+@author: ptruong
 """
 
 import os
@@ -47,6 +47,7 @@ def filter_on_amino_acids(file, amino_acids = ["P", "Hyp"]):
     amino_acids = amino_acids
     
     df = pd.read_csv(file)
+    file = file.replace("Pro", "P") #Replace Pro in filenames with P.
     file_name_splitted = file.split("_")
     for amino_acid in amino_acids:
         if amino_acid in file_name_splitted:
@@ -63,13 +64,13 @@ def get_filtered_data(ms_file, scan_type = "MS", amino_acids = ["P", "Hyp"]):
     scan_type = scan_type
     amino_acids = amino_acids
     file = scan_type + "/" + ms_file
-    df = filter_on_amino_acids(file)
-    df = df.loc[:, ["seqNum", "isoratio", "ion"]] # columns to filter on
+    df = filter_on_amino_acids(file, amino_acids)
+    df = df.loc[:, ["seqNum", "peak", "isoratio", "ion"]] # columns to filter on
     
     if scan_type == "MSMS":    
         df.seqNum = (df.seqNum - 1)
     
-    filename = ms_files[0]
+    filename = ms_file
     filename_col = np.array([filename for i  in range(len(df))])
     df["filename"] = filename_col
     
@@ -81,25 +82,47 @@ def get_filtered_data(ms_file, scan_type = "MS", amino_acids = ["P", "Hyp"]):
 def check_difference_between_lists(list1, list2):
     return list(set(list1)-set(list2))
 
+def get_formatted_dataframe(amino_acids = ["P", "Hyp"]):
+    """
+    Function formats data so that we can work with the isoratios.
+    """
+    amino_acids = amino_acids # Specify amino acids
+    folders = ["MS", "MSMS"] # Specify folder
+    
+    
+    ms_files = get_file_list("MS")
+    msms_files = ms_files = get_file_list("MSMS")    
+    
+    if not check_difference_between_lists(ms_files, msms_files):
+        print("Files in MS and MSMS folders are matching!")
+    else:
+        print("WARNING: files in MS and MSMS folders are not same!")
+    
+    print("Loading and adding files...")
+    df = pd.DataFrame(data=None, columns = ["seqNum", "peak", "isoratio", "ion", "filename", "scan_type"])
+    for ms_type in folders:
+        for file in ms_files:
+            df_ms = get_filtered_data(ms_file = file, scan_type = ms_type, amino_acids = amino_acids)
+            df = df.append(df_ms)
+            print(ms_type + "/" + file)
+    print("Done!")
+    return df
+
 #if __name__ == "__main__":
-folders = ["MS", "MSMS"] # Specify folder
-amino_acids = ["P", "Hyp"] # Specify amino acids
 
-ms_files = get_file_list("MS")
-msms_files = ms_files = get_file_list("MSMS")    
-
-if not check_difference_between_lists(ms_files, msms_files):
-    print("Lists are same")
-
-df = pd.DataFrame(data=None, columns = ["seqNum", "isoratio", "ion", "filename", "scan_type"])
-
-df_ms = get_filtered_data(ms_file = ms_files[0], scan_type = "MS", amino_acids = amino_acids)
-df = df.append(df_ms)
-df_msms = get_filtered_data(ms_file = ms_files[0], scan_type = "MSMS", amino_acids = amino_acids)
-df = df.append(df_msms)
+    
+df = get_formatted_dataframe(amino_acids = ["P", "Hyp"])
 
 
+############
+# Plotting #
+############
 
+# Load plotnine.
+from plotnine import *
+
+# slice my data
+z
 
 
 
