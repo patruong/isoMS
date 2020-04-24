@@ -129,6 +129,41 @@ z
 
 
 
+##############################
+# DOUBLE BOX PLOT FORMATTING #
+##############################
+
+df.to_csv("aminos.csv")
+# Format the data to iris format
+
+boxplot_cols = [
+  "x_count", "x_mean", "x_std","x_min", "x_lower", "x_middle", "x_upper", "x_max",  
+  "y_count", "y_mean", "y_std","y_min", "y_lower", "y_middle", "y_upper", "y_max",
+  "category"
+]
+
+df_boxplot = pd.DataFrame(data = None, columns = boxplot_cols)
+
+category = "setosa" # ions P, Hyp and V 
+
+var_x = df_category["sepalLength"].describe()
+var_y = df_category["sepalWidth"].describe()
+
+df_ion = df[df.peak == "13C"]
+df_MS = df_ion[df_ion.scan_type == "MS"]
+df_MSMS = df_ion[df_ion.scan_type == "MSMS"]
+
+for category in df["species"].unique():
+    df_category = df[df["species"] == category]
+
+    var_x = df_category["sepalLength"].describe()
+    var_y = df_category["sepalWidth"].describe()
+    data_boxplot = np.concatenate((var_x, var_y))
+    data_boxplot = np.append(data_boxplot, category)
+    
+    df_boxplot_values = pd.DataFrame(data = [data_boxplot],
+                                     columns = boxplot_cols)
+    df_boxplot = df_boxplot.append(df_boxplot_values)
 
 
 

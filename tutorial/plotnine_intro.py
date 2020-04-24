@@ -11,7 +11,8 @@ Tutorial script for: https://www.pythoncharts.com/2019/04/11/intro-to-plotnine/
 
 import pandas as pd
 import numpy as np
-
+from io import StringIO
+from tabulate import tabulate
 
 ##############################################
 # https://plotnine.readthedocs.io/en/stable/ #
@@ -114,29 +115,34 @@ for category in df["species"].unique():
                                      columns = boxplot_cols)
     df_boxplot = df_boxplot.append(df_boxplot_values)
 
+print(tabulate(df_boxplot, headers='keys', tablefmt='psql'))
+#print(tabulate(df_boxplot.describe(), headers='keys', tablefmt='psql'))
+
 
 # plot sample size (count as well?)
 
-
+"""
 # NOTE UNFINISHED CODE BELOW
-(ggplot(df, aes(fill = category, color = category)) +
+(ggplot(df_boxplot, aes(fill = "category", color = "category"))+
 
   # 2D box defined by the Q1 & Q3 values in each dimension, with outline
-  geom_rect(aes(xmin = x.lower, xmax = x.upper, ymin = y.lower, ymax = y.upper), alpha = 0.3) +
-  geom_rect(aes(xmin = x.lower, xmax = x.upper, ymin = y.lower, ymax = y.upper), 
-            color = "black", fill = NA) +
+  geom_rect(aes(xmin = "x_lower", xmax = "x_upper", ymin = "y_lower", ymax = "y_upper"), alpha = 0.3) +
+  geom_rect(aes(xmin = "x_lower", xmax = "x_upper", ymin = "y_lower", ymax = "y_upper"), 
+            color = "black", fill = None) +
 
   # whiskers for x-axis dimension with ends
-  geom_segment(aes(x = x.min, y = y.middle, xend = x.max, yend = y.middle)) + #whiskers
-  geom_segment(aes(x = x.min, y = y.lower, xend = x.min, yend = y.upper)) + #lower end
-  geom_segment(aes(x = x.max, y = y.lower, xend = x.max, yend = y.upper)) + #upper end
+  geom_segment(aes(x = "x_min", y = "y_middle", xend = "x_max", yend = "y_middle")) + #whiskers
+  geom_segment(aes(x = "x_min", y = "y_lower", xend = "x_min", yend = "y_upper")) + #lower end
+  geom_segment(aes(x = "x_max", y = "y_lower", xend = "x_max", yend = "y_upper")) + #upper end
 
   # whiskers for y-axis dimension with ends
-  geom_segment(aes(x = x.middle, y = y.min, xend = x.middle, yend = y.max)) + #whiskers
-  geom_segment(aes(x = x.lower, y = y.min, xend = x.upper, yend = y.min)) + #lower end
-  geom_segment(aes(x = x.lower, y = y.max, xend = x.upper, yend = y.max)) + #upper end
+  geom_segment(aes(x = "x_middle", y = "y_min", xend = "x_middle", yend = "y_max")) + #whiskers
+  geom_segment(aes(x = "x_lower", y = "y_min", xend = "x_upper", yend = "y_min")) + #lower end
+  geom_segment(aes(x = "x_lower", y = "y_max", xend = "x_upper", yend = "y_max")) + #upper end
 
   xlab("Sepal.Length") + ylab("Sepal.Width") +
-  coord_cartesian(xlim = c(4, 8), ylim = c(2, 4.5)) +
+  coord_cartesian(xlim = (0, 14), ylim = (0, 12)) +
   theme_classic()
 )
+"""
+
