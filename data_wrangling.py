@@ -20,7 +20,7 @@ def get_formatted_dataframe(df):
     return df_new
 
 
-def transform_df_boxplot(df, peak, x = "MS", y = "MSMS_HCD_125"):
+def transform_df_boxplot(df, peak, x = "MS", y = "MSMS_HCD_125", lower_bound_filter = 0, upper_bound_filter = 1):
     """
     Takes input from get_formatted_dataframe and gives df_boxplot output format.
     
@@ -40,9 +40,17 @@ def transform_df_boxplot(df, peak, x = "MS", y = "MSMS_HCD_125"):
     for category in df["ion"].unique():
         df_category = df[df["ion"] == category]
         df_category = df_category[df_category["peak"] == peak]
+
         
-        var_x = df_category[df_category["scan"] == x].isoratio.describe()
-        var_y = df_category[df_category["scan"] == y].isoratio.describe()
+        # ADD FILTERING BEFORE DESCRIBE()!
+
+        var_x = df_category[df_category["scan"] == x].isoratio
+        var_x = var_x[var_x.between(var_x.quantile(lower_bound_filter), var_x.quantile(upper_bound_filter))]
+        var_y = df_category[df_category["scan"] == y].isoratio
+        var_y = var_y[var_y.between(var_y.quantile(lower_bound_filter), var_y.quantile(upper_bound_filter))]
+        
+        var_x = var_x.describe()
+        var_y = var_y.describe()
         
         data_boxplot = np.concatenate((var_x, var_y))
         data_boxplot = np.append(data_boxplot, category)
@@ -55,12 +63,18 @@ def transform_df_boxplot(df, peak, x = "MS", y = "MSMS_HCD_125"):
 
 df = pd.read_csv("tSIM experiment.csv")
 
+scans = df.scan.unique()
+
 df_formatted = get_formatted_dataframe(df)
 
+####################
+# MANUAL CODE RUN ##
+####################
 
 x_lab = "MS"
-y_lab = "MSMS_HCD_125"
-iso = "13C"
+y_lab = scans[3]
+bound_level = 0.03 # 3 standard deviation 
+#iso = "13C"
 
 for i in df_formatted.peak.unique(): 
     if i != "0":
@@ -68,8 +82,24 @@ for i in df_formatted.peak.unique():
         df_boxplot = transform_df_boxplot(df_formatted, 
                                           peak = iso,
                                           x = x_lab,
-                                          y = y_lab)        
+                                          y = y_lab,
+                                          lower_bound_filter = bound_level,
+                                          upper_bound_filter = (1-bound_level))        
         df_boxplot.to_csv("results/" + iso + "__" + x_lab + "__" + y_lab + ".csv", sep = ";", index = False)
+
+
+
+for scan in scans[1:]:
+    print(scan)
+    y_lab = scan
+    for i in df_formatted.peak.unique(): 
+        if i != "0":
+            iso = i
+            df_boxplot = transform_df_boxplot(df_formatted, 
+                                              peak = iso,
+                                              x = x_lab,
+                                              y = y_lab)        
+            df_boxplot.to_csv("results/" + iso + "__" + x_lab + "__" + y_lab + ".csv", sep = ";", index = False)
 
 
 

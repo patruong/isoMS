@@ -46,6 +46,7 @@ plot4 <- double_box_plot(df4, title = "16O/18O")
 
 grid.arrange(plot1, plot2, plot3, plot4, ncol=2)
 
+# THIS IS THE CODE FOR 4x4 plotting
 plots <- list()
 
 for (i in list.files()){
@@ -56,9 +57,9 @@ for (i in list.files()){
   df <- read.csv(i, sep = ";", header = TRUE)
   plots[[i]] <- double_box_plot(df, title = title, x_lab = x_lab, y_lab = y_lab)
 }
+#do.call(grid.arrange, plots)
+#png(filename="MS_vs_MS.png")
 do.call(grid.arrange, plots)
-
-
 
 set.seed(154)
 D <- data.frame(

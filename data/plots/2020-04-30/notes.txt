@@ -1,0 +1,17 @@
+
+Running the following code-snippet to diagnose - "why no boxes are prevalent in 18O for MS vs MSMS_HCD125".
+
+"""
+df_boxplot = transform_df_boxplot(df_formatted, peak = "18O", lower_bound_filter = bound_level, upper_bound_filter = (1-bound_level))
+"""
+
+Shows that there are no data points for P and V in MSMS_HCD125
+
+...The same applies for MSMS_HCD150
+
+"""
+df_boxplot = transform_df_boxplot(df_formatted, peak = "18O", y = "MSMS_HCD_150", lower_bound_filter = bound_level, upper_bound_filter = (1-bound_level))
+"""
+
+
+
