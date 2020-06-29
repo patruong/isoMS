@@ -6,6 +6,8 @@ Created on Mon Apr 27 14:14:50 2020
 @author: ptruong
 """
 
+import datetime
+import os
 
 import numpy as np
 import pandas as pd
@@ -76,19 +78,22 @@ y_lab = scans[3]
 bound_level = 0.03 # 3 standard deviation 
 #iso = "13C"
 
-for i in df_formatted.peak.unique(): 
-    if i != "0":
-        iso = i
-        df_boxplot = transform_df_boxplot(df_formatted, 
-                                          peak = iso,
-                                          x = x_lab,
-                                          y = y_lab,
-                                          lower_bound_filter = bound_level,
-                                          upper_bound_filter = (1-bound_level))        
-        df_boxplot.to_csv("results/" + iso + "__" + x_lab + "__" + y_lab + ".csv", sep = ";", index = False)
+# =============================================================================
+# for i in df_formatted.peak.unique(): 
+#     if i != "0":
+#         iso = i
+#         df_boxplot = transform_df_boxplot(df_formatted, 
+#                                           peak = iso,
+#                                           x = x_lab,
+#                                           y = y_lab,
+#                                           lower_bound_filter = bound_level,
+#                                           upper_bound_filter = (1-bound_level))        
+#         df_boxplot.to_csv("results/" + iso + "__" + x_lab + "__" + y_lab + ".csv", sep = ";", index = False)
+# 
+# =============================================================================
 
-
-
+x = datetime.datetime.now()
+date = "{}-{}-{}".format(x.year, x.month, x.day)
 for scan in scans[1:]:
     print(scan)
     y_lab = scan
@@ -98,8 +103,30 @@ for scan in scans[1:]:
             df_boxplot = transform_df_boxplot(df_formatted, 
                                               peak = iso,
                                               x = x_lab,
-                                              y = y_lab)        
-            df_boxplot.to_csv("results/" + iso + "__" + x_lab + "__" + y_lab + ".csv", sep = ";", index = False)
+                                              y = y_lab,
+                                              lower_bound_filter = bound_level,
+                                              upper_bound_filter = (1-bound_level))
+            try:
+                df_boxplot.to_csv("results_"+ date + "/" + iso + "__" + x_lab + "__" + y_lab + ".csv", sep = ";", index = False)
+            except:
+                os.mkdir("results_"+ date)
+                df_boxplot.to_csv("results_"+ date + "/" + iso + "__" + x_lab + "__" + y_lab + ".csv", sep = ";", index = False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

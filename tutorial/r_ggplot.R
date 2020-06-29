@@ -39,12 +39,24 @@ df2 <- read.csv("TEST_15N.csv", sep = ";", header = TRUE)
 df3 <- read.csv("TEST_2H.csv", sep = ";", header = TRUE)
 df4 <- read.csv("TEST_18O.csv", sep = ";", header = TRUE)
 
+
+df1 <- read.csv("13C__MS__MSMS_HCD0.csv", sep = ";", header = TRUE)
+df2 <- read.csv("15N__MS__MSMS_HCD0.csv", sep = ";", header = TRUE)
+df3 <- read.csv("18O__MS__MSMS_HCD0.csv", sep = ";", header = TRUE)
+df4 <- read.csv("2H__MS__MSMS_HCD0.csv", sep = ";", header = TRUE)
+
+
 plot1 <- double_box_plot(df1, title = "12C/13C")
 plot2 <- double_box_plot(df2, title = "14N/15N")
 plot3 <- double_box_plot(df3, title = "1H/2H")
 plot4 <- double_box_plot(df4, title = "16O/18O")
 
 grid.arrange(plot1, plot2, plot3, plot4, ncol=2)
+
+
+########################################3
+# 
+#######################################
 
 # THIS IS THE CODE FOR 4x4 plotting
 plots <- list()

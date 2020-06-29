@@ -88,11 +88,11 @@ def get_formatted_dataframe(amino_acids = ["P", "Hyp"]):
     Function formats data so that we can work with the isoratios.
     """
     amino_acids = amino_acids # Specify amino acids
-    folders = ["MS", "MSMS"] # Specify folder
+    folders = ["MS", "MSMS_HCD0"] # Specify folder
     
     
     ms_files = get_file_list("MS")
-    msms_files = ms_files = get_file_list("MSMS")    
+    msms_files = ms_files = get_file_list("MSMS_HCD0")    
     
     if not check_difference_between_lists(ms_files, msms_files):
         print("Files in MS and MSMS folders are matching!")
@@ -108,6 +108,11 @@ def get_formatted_dataframe(amino_acids = ["P", "Hyp"]):
             print(ms_type + "/" + file)
     print("Done!")
     return df
+
+
+
+
+
 
 #if __name__ == "__main__":
 
