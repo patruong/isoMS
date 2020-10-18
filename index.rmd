@@ -11,4 +11,9 @@ knitr::opts_chunk$set(echo = TRUE)
 
 ## 2020-10-18
 
+### 23:27 Finished data conversion to .mzML
+Just used msconvert to convert the .raw data to .mzML. The only filter used is pickPeaking msLevel=1-2. The end file size are much smaller than expected even though I've been told they are expected to be larger than the .raw files. Am I doing something wrong?
+
+I will try pyopenms to open these .mzML files.
+
 Setting up a Rmarkdown log for this project. 
