@@ -1,1 +1,0 @@
-Double box plots of the data, non-filtered.
