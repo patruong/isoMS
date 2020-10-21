@@ -1,13 +1,28 @@
 ---
 title: "isoMS"
 author: "ptruong"
-date: "October 18, 2020"
+date: "October 21, 2020"
 output: html_document
 ---
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+
+## 2020-10-21 Webnesday
+### 14:27 More tools, pyopenms and previous run of conversion to .mzML was bad
+Previous run conversion run with msconvert was bad. Just reran the code without peakPicking filter.
+
+Checked out pyopenms. It works on my desktop, but there is an error related to QT5 on my laptop when running on spyder (why?). 
+
+I got the suggestion to use dinosaur as a peakPicker and try different peakPicking filters from it. 
+
+ToDo:
+- check if Percolator applicable at some step here?
+- check how to run dinosaur. 
+- peakPick with dinosaur. 
+- Script code to generate some exploratory plots with .mzML files.
+- Check if pandas-profiling can be useful. 
 
 ## 2020-10-18
 
