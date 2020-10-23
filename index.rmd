@@ -8,6 +8,21 @@ output: html_document
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
+## About
+The aim of this study is to identify the best method to preprocess and accuratly portray mass spectrometric isotopic ratio data from individual amino acids. Experiments with valine (C<sub>5</sub>H<sub>11</sub>NO<sub>2</sub>), proline (C<sub>5</sub>H<sub>9</sub>NO<sub>2</sub>) and hydroxyproline (C<sub>5</sub>H<sub>9</sub>NO<sub>3</sub>) samples has been conducted and four isotopes ratios are of interest (H<sub>1</sub>/H<sub>2</sub>, C<sub>12</sub>/C<sub>13</sub>, N<sub>14</sub>/N<sub>15</sub> and O<sub>16</sub>/O<sub>18</sub>). The goal is find a method to represent the data in a accurate and precise way. Ideally, the ranking of the amino acids should be the same for different isotopic ratios (the accuracy problem) and the variance of the measurement should not be too broad (the precision problem). Specifically, previous attempts has shown that there the ranking of amino acids difer for N and H isotopes, and that carbon isotopic ratios has a high variance (in the order of percentages, when it is expected to be in promille). The carbon measurement problem causes an issue in reproducibility of experiments. These errors could be caused by either measurement and sample preperation errors, or data preprocessing and statistical method. This project focuses solely on the data preprocessing and statistical approach. 
+
+## Current steps
+- Precision problem: Find method that reduces the variance of isotopic ratios (specifically interested in finding it for C).
+- Accuracy problem: Find method that gives stable ranking of amino acids for the different isotopic ratios.
+- Check coefficient of variance between different replicates, to check normalization.
+- Check if different transformations could give better results (for example log-transformation.
+- Find a method to yield meaningful reproducib<sub></sub>le experimental results, without ratios (is there a way to find similar results as above without ratios?)
+- Use median of ratios, instead of ratios (Check Romans paper).
+- Remocal of non-statistical outliers: Use subset of medians of data (medians of triplicates or quadruplicates), simulate similar process with gaussian distribution to find the correction factor and apply the correction factor to the romal of non-statistical outliers process. 
+- 
+Goal is to have a methods that produces reproducable experimental results. 
+
+
 
 ## 2020-10-21 Webnesday
 ### 14:27 More tools, pyopenms and previous run of conversion to .mzML was bad
