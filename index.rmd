@@ -22,7 +22,11 @@ This study aims to identify the best method to preprocess and accurately portray
 - 
 Goal is to have a methods that produces reproducable experimental results. 
 
-
+## 2020-11-10 Tuesday
+ToDo:
+- Check dinosaur, openms, skyline...
+- Skim (Cramer et al.)[https://www.researchgate.net/publication/47730346_Evaluation_of_Peak-Picking_Algorithms_for_Protein_Mass_Spectrometry]
+- Check how to vizualize and vizualise .mzML files to inspect.
 
 ## 2020-10-21 Webnesday
 ### 14:27 More tools, pyopenms and previous run of conversion to .mzML was bad
