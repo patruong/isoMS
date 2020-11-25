@@ -22,6 +22,15 @@ This study aims to identify the best method to preprocess and accurately portray
 - 
 Goal is to have a methods that produces reproducable experimental results. 
 
+## ToDo
+- compute masses of OHCN and isotopes.
+- peak pick
+- identify the monoisotopic peaks and isotope peaks
+- calculate the ratio of monoisotope to isotope.
+
+
+
+
 ## 2020-11-10 Tuesday
 ToDo:
 - Check dinosaur, openms, skyline...
